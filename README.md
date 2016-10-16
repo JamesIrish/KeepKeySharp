@@ -14,7 +14,7 @@ This library would not be possible without the excellent [HID library](https://g
 
 ## Usage
 
-Install the [KeepKeySharp via NuGet]() or clone this repository.
+Install the [KeepKeySharp package via NuGet]() or clone this repository.
 
 `Install-Package KeepKeySharp`
 
