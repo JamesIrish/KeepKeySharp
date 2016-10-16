@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepKeySharp", "KeepKeySharp\KeepKeySharp.csproj", "{0CA6B5E2-C29C-4080-B0AA-E435CEA30325}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepKeySharp.Console", "KeepKeySharp.Console\KeepKeySharp.Console.csproj", "{72E876C7-BA3B-4804-8F68-FA6A91B99471}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{21ABC669-DF6A-42D6-A9B5-58714967AF6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeepKeySharp.ProtoConsole", "utils\KeepKeySharp.ProtoConsole\KeepKeySharp.ProtoConsole.csproj", "{65AE65FA-2972-48A5-BBAC-852AAE39D077}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CA6B5E2-C29C-4080-B0AA-E435CEA30325}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA6B5E2-C29C-4080-B0AA-E435CEA30325}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA6B5E2-C29C-4080-B0AA-E435CEA30325}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA6B5E2-C29C-4080-B0AA-E435CEA30325}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E876C7-BA3B-4804-8F68-FA6A91B99471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E876C7-BA3B-4804-8F68-FA6A91B99471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E876C7-BA3B-4804-8F68-FA6A91B99471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E876C7-BA3B-4804-8F68-FA6A91B99471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65AE65FA-2972-48A5-BBAC-852AAE39D077}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65AE65FA-2972-48A5-BBAC-852AAE39D077}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65AE65FA-2972-48A5-BBAC-852AAE39D077}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65AE65FA-2972-48A5-BBAC-852AAE39D077}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{65AE65FA-2972-48A5-BBAC-852AAE39D077} = {21ABC669-DF6A-42D6-A9B5-58714967AF6A}
+	EndGlobalSection
+EndGlobal
