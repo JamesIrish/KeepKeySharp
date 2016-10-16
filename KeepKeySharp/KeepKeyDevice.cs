@@ -7,7 +7,24 @@ using KeepKeySharp.Contracts;
 
 namespace KeepKeySharp
 {
-    public class KeepKeyDevice : IDisposable
+    public interface IKeepKeyDevice : IDisposable
+    {
+        event EventHandler Connected;
+        event EventHandler Disconnected;
+        bool IsConnected { get; }
+
+        bool TryOpenDevice();
+        Task WaitForKeepKeyConnectionAsync();
+        void CloseDevice();
+
+        Features Features { get; }
+
+        Features Initialize();
+        string Ping(string message, bool buttonProtection = true);
+
+    }
+
+    public class KeepKeyDevice : IKeepKeyDevice
     {
 
         private const int VendorId = 0x2B24;
@@ -52,7 +69,7 @@ namespace KeepKeySharp
             return true;
         }
         /// <summary>Checks for the presence of the KeepKey device. The Connected event will fire once it has been connected. Optionally you can await this method (the event will fire either way).</summary>
-        /// <returns></returns>
+        /// <returns>Task that can be awaited if required</returns>
         public async Task WaitForKeepKeyConnectionAsync()
         {
             while (_device == null && !_disposed)
@@ -88,7 +105,7 @@ namespace KeepKeySharp
         }
 
         /// <summary>Details of the KeepKey device</summary>
-        public Features Features { get; internal set; }
+        public Features Features { get; private set; }
 
         /// <summary>Queries the KeepKey for its details. While not essential we suggest you do this prior to any other operations.</summary>
         /// <returns></returns>
@@ -140,7 +157,8 @@ namespace KeepKeySharp
             if (recievedType == MessageType.MessageType_ButtonRequest)
             {
                 // Acknowledge the button request & wait for the next response
-                _communicator.SendMessage(ButtonAck.SerializeToBytes(new ButtonAck()), MessageType.MessageType_ButtonAck);
+                if (!_communicator.SendMessage(ButtonAck.SerializeToBytes(new ButtonAck()), MessageType.MessageType_ButtonAck))
+                    throw new ApplicationException("Error writing to device");
                 received = _communicator.RecieveMessage(out recievedType);
             }
             
@@ -159,9 +177,10 @@ namespace KeepKeySharp
         }
 
         /// <summary>Get the Extended Public Key from the device for the BIP32 path specified.</summary>
+        /// <param name="pinChallenge">Callback that gets </param>
         /// <param name="accountPath">BIP32 path e.g. "44'/0'/0'/0/0 = first Bitcoin account, first public key., from this you can derive the address.</param>
         /// <returns>The public key of the for the account at the path specified.</returns>
-        public PublicKey GetPublicKey(string accountPath)
+        public PublicKey GetPublicKey(Func<PinMatrixRequestType?, string> pinChallenge, string accountPath)
         {
             // Get the path as units
             var path = NBitcoin.KeyPath.Parse(accountPath);
@@ -184,6 +203,15 @@ namespace KeepKeySharp
             // Get the response from the device
             MessageType recievedType;
             var received = _communicator.RecieveMessage(out recievedType);
+
+            if (recievedType == MessageType.MessageType_PinMatrixRequest)
+            {
+                var pinRequest = PinMatrixRequest.Deserialize(received);
+                var pin = pinChallenge(pinRequest.Type);
+                if (!_communicator.SendMessage(PinMatrixAck.SerializeToBytes(new PinMatrixAck {Pin = pin}), MessageType.MessageType_PinMatrixAck))
+                    throw new ApplicationException("Error writing to device");
+                received = _communicator.RecieveMessage(out recievedType);
+            }
 
             // PublicKey received
             if (recievedType == MessageType.MessageType_PublicKey)

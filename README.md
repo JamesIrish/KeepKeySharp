@@ -87,3 +87,6 @@ The above requests the first public key of the first account for Bitcoin. Once w
 ## Sample
 
 This repository contains a project called [KeepKeySharp.Console](https://github.com/JamesIrish/KeepKeySharp/blob/master/KeepKeySharp.Console/Program.cs) that demonstrates the above in action.  Clone this repository and build the solution (you will need .Net 4.5, Visual Studio and to have restored the NuGet packages).  DISCONNECT your KeepKey, run the console project and follow the output.
+
+
+[![Demo Console Screenshot](console-screenshot.png)]
