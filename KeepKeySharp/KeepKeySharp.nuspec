@@ -1,0 +1,25 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>KeepKeySharp</id>
+    <version>1.0</version>
+    <authors>James Irish</authors>
+    <owners>irishcyclist</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      C# library for communicating with the KeepKey hardware wallet over USB
+    </description>
+    <language>en-US</language>
+    <projectUrl>https://github.com/JamesIrish/KeepKeySharp</projectUrl>
+    <licenseUrl>https://github.com/JamesIrish/KeepKeySharp/blob/master/LICENSE</licenseUrl>
+    <tags>keepkey hid hardware bitcoin wallet sharp keepkeysharp csharp usb crypto trezor</tags>
+    <dependencies>
+      <dependency id="hidlibrary" version="3.2.37.0" />
+      <dependency id="NBitcoin" version="3.0.0.62"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Debug\KeepKeySharp.dll" target="lib/net45" />
+    <file src="bin\Debug\KeepKeySharp.xml" target="lib/net45" />
+  </files>
+</package>
