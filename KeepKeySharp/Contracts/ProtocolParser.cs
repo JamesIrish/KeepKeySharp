@@ -95,9 +95,6 @@ namespace SilentOrbit.ProtocolBuffers
         /// <param name='baseStream'>
         /// Base stream.
         /// </param>
-        /// <param name='maxLength'>
-        /// Max length allowed to read from the stream.
-        /// </param>
         public PositionStream(Stream baseStream)
         {
             this.stream = baseStream;
