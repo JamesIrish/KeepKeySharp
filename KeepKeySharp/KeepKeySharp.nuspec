@@ -12,7 +12,7 @@
     <language>en-US</language>
     <projectUrl>https://github.com/JamesIrish/KeepKeySharp</projectUrl>
     <licenseUrl>https://github.com/JamesIrish/KeepKeySharp/blob/master/LICENSE</licenseUrl>
-    <!--<iconUrl></iconUrl>-->
+    <iconUrl>https://github.com/JamesIrish/KeepKeySharp/raw/master/logo-grey-64.png</iconUrl>
     <tags>keepkey hid hardware bitcoin wallet sharp keepkeysharp csharp usb crypto trezor</tags>
   </metadata>
 </package>
