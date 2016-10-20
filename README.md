@@ -14,7 +14,7 @@ This library would not be possible without the excellent [HID library](https://g
 
 ## Usage
 
-Install the [KeepKeySharp via NuGet]() or clone this repository.
+Install the [KeepKeySharp package via NuGet]() or clone this repository.
 
 `Install-Package KeepKeySharp`
 
@@ -73,10 +73,11 @@ var pingReply = kk.Ping("Hello world!", true);
 
 ### GetPublicKey
 
-Returns the Extended Public Key for the account specified.  Pass a BIP32 key string to the method to get the public key from which you can extract the public address used (and thus derive a balance or transactions etc.)
+Returns the Extended Public Key for the account specified.  Pass a BIP32 key string to the method to get the public key from which you can extract the public address (and thus derive a balance or transactions etc. etc.)   This method MAY call the callback supplied by the first argument requesting the users pin. This is scrambled version.  See the Console project for specifics.
 
 ```c#
-var publicKey = kk.GetPublicKey("44'/0'/0'/0/0");
+var pinChallengeFunction = new Func<PinMatrixRequestType?, string>(t => "12345678");
+var publicKey = kk.GetPublicKey(pinChallengeFunction, "44'/0'/0'/0/0");
 var extPubKey = ExtPubKey.Parse(publicKey.Xpub, Network.Main);
 var pubKey = extPubKey.PubKey;
 var address = pubKey.GetAddress(Network.Main);
