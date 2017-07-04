@@ -33,7 +33,47 @@ namespace KeepKeySharp.Contracts
 
     /// <summary>
     /// <para>*</para>
-    /// <para> * Structure representing exchange response</para>
+    /// <para> * Structure representing exchange response version 2</para>
+    /// <para></para>
+    /// </summary>
+    public partial class ExchangeResponseV2
+    {
+        public global::KeepKeySharp.Contracts.ExchangeAddress DepositAddress { get; set; }
+
+        public byte[] DepositAmount { get; set; }
+
+        public long? Expiration { get; set; }
+
+        public byte[] QuotedRate { get; set; }
+
+        public global::KeepKeySharp.Contracts.ExchangeAddress WithdrawalAddress { get; set; }
+
+        public byte[] WithdrawalAmount { get; set; }
+
+        public global::KeepKeySharp.Contracts.ExchangeAddress ReturnAddress { get; set; }
+
+        public byte[] ApiKey { get; set; }
+
+        public byte[] MinerFee { get; set; }
+
+        public byte[] OrderId { get; set; }
+
+    }
+
+    public partial class SignedExchangeResponse
+    {
+        public global::KeepKeySharp.Contracts.ExchangeResponse Response { get; set; }
+
+        /// <summary> deprecated - latest firmware version throws error if this field is used</summary>
+        public byte[] Signature { get; set; }
+
+        public global::KeepKeySharp.Contracts.ExchangeResponseV2 ResponseV2 { get; set; }
+
+    }
+
+    /// <summary>
+    /// <para>*</para>
+    /// <para> * Structure representing exchange response version 1 (deprecated)</para>
     /// <para></para>
     /// </summary>
     public partial class ExchangeResponse
@@ -57,14 +97,6 @@ namespace KeepKeySharp.Contracts
         public ulong? MinerFee { get; set; }
 
         public byte[] OrderId { get; set; }
-
-    }
-
-    public partial class SignedExchangeResponse
-    {
-        public global::KeepKeySharp.Contracts.ExchangeResponse Response { get; set; }
-
-        public byte[] Signature { get; set; }
 
     }
 
@@ -405,7 +437,28 @@ namespace KeepKeySharp.Contracts
 
         public bool? ShowDisplay { get; set; }
 
+        /// <summary> optionally show on display before sending the result</summary>
         public global::KeepKeySharp.Contracts.MultisigRedeemScriptType Multisig { get; set; }
+
+        /// <summary> Filled if we are showing a multisig address</summary>
+        public global::KeepKeySharp.Contracts.InputScriptType? ScriptType { get; set; }
+
+    }
+
+    /// <summary>
+    /// <para>*</para>
+    /// <para> * Request: Ask device for Ethereum address corresponding to address_n path</para>
+    /// <para> * @next PassphraseRequest</para>
+    /// <para> * @next EthereumAddress</para>
+    /// <para> * @next Failure</para>
+    /// <para></para>
+    /// </summary>
+    public partial class EthereumGetAddress
+    {
+        public List<uint> AddressN { get; set; }
+
+        /// <summary> BIP-32 path to derive the key from master node</summary>
+        public bool? ShowDisplay { get; set; }
 
     }
 
@@ -418,6 +471,18 @@ namespace KeepKeySharp.Contracts
     public partial class Address
     {
         public string AddressField { get; set; }
+
+    }
+
+    /// <summary>
+    /// <para>*</para>
+    /// <para> * Response: Contains an Ethereum address derived from device private seed</para>
+    /// <para> * @prev EthereumGetAddress</para>
+    /// <para></para>
+    /// </summary>
+    public partial class EthereumAddress
+    {
+        public byte[] Address { get; set; }
 
     }
 
@@ -847,6 +912,12 @@ namespace KeepKeySharp.Contracts
         /// <summary> number of transaction inputs</summary>
         public string CoinName { get; set; }
 
+        /// <summary> coin to use</summary>
+        public uint? Version { get; set; }
+
+        /// <summary> transaction version</summary>
+        public uint? LockTime { get; set; }
+
     }
 
     /// <summary>
@@ -872,6 +943,12 @@ namespace KeepKeySharp.Contracts
 
         /// <summary> transactions whose outputs are used to build current inputs</summary>
         public string CoinName { get; set; }
+
+        /// <summary> coin to use</summary>
+        public uint? Version { get; set; }
+
+        /// <summary> transaction version</summary>
+        public uint? LockTime { get; set; }
 
     }
 
@@ -920,6 +997,99 @@ namespace KeepKeySharp.Contracts
     public partial class RawTxAck
     {
         public global::KeepKeySharp.Contracts.RawTransactionType Tx { get; set; }
+
+    }
+
+    /// <summary>
+    /// <para>*</para>
+    /// <para> * Request: Ask device to sign transaction</para>
+    /// <para> * All fields are optional from the protocol's point of view. Each field defaults to value `0` if missing.</para>
+    /// <para> * Note: the first at most 1024 bytes of data MUST be transmitted as part of this message.</para>
+    /// <para> * @next PassphraseRequest</para>
+    /// <para> * @next PinMatrixRequest</para>
+    /// <para> * @next EthereumTxRequest</para>
+    /// <para> * @next Failure</para>
+    /// <para></para>
+    /// </summary>
+    public partial class EthereumSignTx
+    {
+        public List<uint> AddressN { get; set; }
+
+        /// <summary> BIP-32 path to derive the key from master node</summary>
+        public byte[] Nonce { get; set; }
+
+        /// <summary> <=256 bit unsigned big endian</summary>
+        public byte[] GasPrice { get; set; }
+
+        /// <summary> <=256 bit unsigned big endian (in wei)</summary>
+        public byte[] GasLimit { get; set; }
+
+        /// <summary> <=256 bit unsigned big endian</summary>
+        public byte[] To { get; set; }
+
+        /// <summary> 160 bit address hash</summary>
+        public byte[] Value { get; set; }
+
+        /// <summary> <=256 bit unsigned big endian (in wei)</summary>
+        public byte[] DataInitialChunk { get; set; }
+
+        /// <summary> The initial data chunk (<= 1024 bytes)</summary>
+        public uint? DataLength { get; set; }
+
+        /// <summary> Length of transaction payload</summary>
+        public List<uint> ToAddressN { get; set; }
+
+        /// <summary> BIP-32 path to derive key for fund transfer</summary>
+        public global::KeepKeySharp.Contracts.OutputAddressType? AddressType { get; set; }
+
+        /// <summary> output address type</summary>
+        public global::KeepKeySharp.Contracts.ExchangeType ExchangeType { get; set; }
+
+        /// <summary> exchange type data</summary>
+        public uint? ChainId { get; set; }
+
+    }
+
+    /// <summary>
+    /// <para>*</para>
+    /// <para> * Response: Device asks for more data from transaction payload, or returns the signature.</para>
+    /// <para> * If data_length is set, device awaits that many more bytes of payload.</para>
+    /// <para> * Otherwise, the signature_* fields contain the computed transaction signature. All three fields will be present.</para>
+    /// <para> * @prev EthereumSignTx</para>
+    /// <para> * @next EthereumTxAck</para>
+    /// <para></para>
+    /// </summary>
+    public partial class EthereumTxRequest
+    {
+        public uint? DataLength { get; set; }
+
+        /// <summary> Number of bytes being requested (<= 1024)</summary>
+        public uint? SignatureV { get; set; }
+
+        /// <summary> Computed signature (recovery parameter, limited to 27 or 28)</summary>
+        public byte[] SignatureR { get; set; }
+
+        /// <summary> Computed signature R component (256 bit)</summary>
+        public byte[] SignatureS { get; set; }
+
+        /// <summary> Computed signature S component (256 bit)</summary>
+        public byte[] Hash { get; set; }
+
+        /// <summary> Computed hash using SHA3 (keccak_ctx)</summary>
+        public byte[] SignatureDer { get; set; }
+
+    }
+
+    /// <summary>
+    /// <para>*</para>
+    /// <para> * Request: Transaction payload data.</para>
+    /// <para> * @prev EthereumTxRequest</para>
+    /// <para> * @next EthereumTxRequest</para>
+    /// <para></para>
+    /// </summary>
+    public partial class EthereumTxAck
+    {
+        public byte[] DataChunk { get; set; }
 
     }
 
@@ -1267,6 +1437,9 @@ namespace KeepKeySharp.Contracts
         /// <summary> defines template of input script</summary>
         public global::KeepKeySharp.Contracts.MultisigRedeemScriptType Multisig { get; set; }
 
+        /// <summary> Filled if input is going to spend multisig tx</summary>
+        public ulong? Amount { get; set; }
+
     }
 
     /// <summary>
@@ -1298,7 +1471,7 @@ namespace KeepKeySharp.Contracts
         /// <summary> defines op_return data; script_type must be PAYTOOPRETURN, amount must be 0</summary>
         public global::KeepKeySharp.Contracts.OutputAddressType? AddressType { get; set; }
 
-        /// <summary> output address type specify in the output</summary>
+        /// <summary> output address type</summary>
         public global::KeepKeySharp.Contracts.ExchangeType ExchangeType { get; set; }
 
     }
@@ -1339,6 +1512,10 @@ namespace KeepKeySharp.Contracts
 
         public uint? OutputsCnt { get; set; }
 
+        public byte[] ExtraData { get; set; }
+
+        public uint? ExtraDataLen { get; set; }
+
     }
 
     /// <summary>
@@ -1365,6 +1542,12 @@ namespace KeepKeySharp.Contracts
 
         /// <summary> device expects TxAck message from the computer</summary>
         public byte[] TxHash { get; set; }
+
+        /// <summary> tx_hash of requested transaction</summary>
+        public uint? ExtraDataLen { get; set; }
+
+        /// <summary> length of requested extra data</summary>
+        public uint? ExtraDataOffset { get; set; }
 
     }
 
@@ -2201,6 +2384,11 @@ namespace KeepKeySharp.Contracts
         MessageType_SignIdentity = 53,
         MessageType_SignedIdentity = 54,
         MessageType_GetFeatures = 55,
+        MessageType_EthereumGetAddress = 56,
+        MessageType_EthereumAddress = 57,
+        MessageType_EthereumSignTx = 58,
+        MessageType_EthereumTxRequest = 59,
+        MessageType_EthereumTxAck = 60,
         MessageType_CharacterRequest = 80,
         MessageType_CharacterAck = 81,
         MessageType_RawTxAck = 82,
@@ -2246,9 +2434,16 @@ namespace KeepKeySharp.Contracts
     public enum OutputScriptType
     {
         PAYTOADDRESS = 0,
+        /// <summary> used for all addresses (bitcoin, p2sh, witness)</summary>
         PAYTOSCRIPTHASH = 1,
+        /// <summary> p2sh address (deprecated; use PAYTOADDRESS)</summary>
         PAYTOMULTISIG = 2,
+        /// <summary> only for change output</summary>
         PAYTOOPRETURN = 3,
+        /// <summary> op_return</summary>
+        PAYTOWITNESS = 4,
+        /// <summary> only for change output</summary>
+        PAYTOP2SHWITNESS = 5,
     }
 
 
@@ -2261,7 +2456,14 @@ namespace KeepKeySharp.Contracts
     public enum InputScriptType
     {
         SPENDADDRESS = 0,
+        /// <summary> standard p2pkh address</summary>
         SPENDMULTISIG = 1,
+        /// <summary> p2sh multisig address</summary>
+        EXTERNAL = 2,
+        /// <summary> reserved for external inputs (coinjoin)</summary>
+        SPENDWITNESS = 3,
+        /// <summary> native segwit</summary>
+        SPENDP2SHWITNESS = 4,
     }
 
 
@@ -2277,6 +2479,7 @@ namespace KeepKeySharp.Contracts
         TXOUTPUT = 1,
         TXMETA = 2,
         TXFINISHED = 3,
+        TXEXTRADATA = 4,
     }
 
 

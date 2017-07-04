@@ -71,7 +71,8 @@ namespace KeepKeySharp.ProtoConsole
             {
                 WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory,
                 FileName = protoc,
-                WindowStyle = ProcessWindowStyle.Normal
+                WindowStyle = ProcessWindowStyle.Normal,
+                UseShellExecute = false
             };
 
             var outputFile = Path.Combine(contractsDir, "Messages.cs");

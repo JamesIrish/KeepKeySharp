@@ -259,6 +259,661 @@ namespace KeepKeySharp.Contracts
     }
 
     [System.Serializable]
+    public partial class ExchangeResponseV2
+    {
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static ExchangeResponseV2 Deserialize(Stream stream)
+        {
+            var instance = new ExchangeResponseV2();
+            Deserialize(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static ExchangeResponseV2 DeserializeLengthDelimited(Stream stream)
+        {
+            var instance = new ExchangeResponseV2();
+            DeserializeLengthDelimited(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static ExchangeResponseV2 DeserializeLength(Stream stream, int length)
+        {
+            var instance = new ExchangeResponseV2();
+            DeserializeLength(stream, length, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream and create a new instance to deserializing into</summary>
+        public static ExchangeResponseV2 Deserialize(byte[] buffer)
+        {
+            var instance = new ExchangeResponseV2();
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream before deserializing</summary>
+        public static global::KeepKeySharp.Contracts.ExchangeResponseV2 Deserialize(byte[] buffer, global::KeepKeySharp.Contracts.ExchangeResponseV2 instance)
+        {
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Takes the remaining content of the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.ExchangeResponseV2 Deserialize(Stream stream, global::KeepKeySharp.Contracts.ExchangeResponseV2 instance)
+        {
+            while (true)
+            {
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    break;
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        if (instance.DepositAddress == null)
+                            instance.DepositAddress = global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream, instance.DepositAddress);
+                        continue;
+                    // Field 2 LengthDelimited
+                    case 18:
+                        instance.DepositAmount = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 3 Varint
+                    case 24:
+                        instance.Expiration = (long)global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
+                    // Field 4 LengthDelimited
+                    case 34:
+                        instance.QuotedRate = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 5 LengthDelimited
+                    case 42:
+                        if (instance.WithdrawalAddress == null)
+                            instance.WithdrawalAddress = global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream, instance.WithdrawalAddress);
+                        continue;
+                    // Field 6 LengthDelimited
+                    case 50:
+                        instance.WithdrawalAmount = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 7 LengthDelimited
+                    case 58:
+                        if (instance.ReturnAddress == null)
+                            instance.ReturnAddress = global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream, instance.ReturnAddress);
+                        continue;
+                    // Field 8 LengthDelimited
+                    case 66:
+                        instance.ApiKey = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 9 LengthDelimited
+                    case 74:
+                        instance.MinerFee = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 10 LengthDelimited
+                    case 82:
+                        instance.OrderId = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the VarInt length prefix and the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.ExchangeResponseV2 DeserializeLengthDelimited(Stream stream, global::KeepKeySharp.Contracts.ExchangeResponseV2 instance)
+        {
+            long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+            limit += stream.Position;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        if (instance.DepositAddress == null)
+                            instance.DepositAddress = global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream, instance.DepositAddress);
+                        continue;
+                    // Field 2 LengthDelimited
+                    case 18:
+                        instance.DepositAmount = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 3 Varint
+                    case 24:
+                        instance.Expiration = (long)global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
+                    // Field 4 LengthDelimited
+                    case 34:
+                        instance.QuotedRate = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 5 LengthDelimited
+                    case 42:
+                        if (instance.WithdrawalAddress == null)
+                            instance.WithdrawalAddress = global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream, instance.WithdrawalAddress);
+                        continue;
+                    // Field 6 LengthDelimited
+                    case 50:
+                        instance.WithdrawalAmount = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 7 LengthDelimited
+                    case 58:
+                        if (instance.ReturnAddress == null)
+                            instance.ReturnAddress = global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream, instance.ReturnAddress);
+                        continue;
+                    // Field 8 LengthDelimited
+                    case 66:
+                        instance.ApiKey = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 9 LengthDelimited
+                    case 74:
+                        instance.MinerFee = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 10 LengthDelimited
+                    case 82:
+                        instance.OrderId = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.ExchangeResponseV2 DeserializeLength(Stream stream, int length, global::KeepKeySharp.Contracts.ExchangeResponseV2 instance)
+        {
+            long limit = stream.Position + length;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        if (instance.DepositAddress == null)
+                            instance.DepositAddress = global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream, instance.DepositAddress);
+                        continue;
+                    // Field 2 LengthDelimited
+                    case 18:
+                        instance.DepositAmount = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 3 Varint
+                    case 24:
+                        instance.Expiration = (long)global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
+                    // Field 4 LengthDelimited
+                    case 34:
+                        instance.QuotedRate = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 5 LengthDelimited
+                    case 42:
+                        if (instance.WithdrawalAddress == null)
+                            instance.WithdrawalAddress = global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream, instance.WithdrawalAddress);
+                        continue;
+                    // Field 6 LengthDelimited
+                    case 50:
+                        instance.WithdrawalAmount = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 7 LengthDelimited
+                    case 58:
+                        if (instance.ReturnAddress == null)
+                            instance.ReturnAddress = global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeAddress.DeserializeLengthDelimited(stream, instance.ReturnAddress);
+                        continue;
+                    // Field 8 LengthDelimited
+                    case 66:
+                        instance.ApiKey = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 9 LengthDelimited
+                    case 74:
+                        instance.MinerFee = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 10 LengthDelimited
+                    case 82:
+                        instance.OrderId = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Serialize the instance into the stream</summary>
+        public static void Serialize(Stream stream, ExchangeResponseV2 instance)
+        {
+            var msField = global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Pop();
+            if (instance.DepositAddress != null)
+            {
+                // Key for field: 1, LengthDelimited
+                stream.WriteByte(10);
+                ﻿msField.SetLength(0);
+                global::KeepKeySharp.Contracts.ExchangeAddress.Serialize(msField, instance.DepositAddress);
+                // Length delimited byte array
+                uint length1 = (uint)msField.Length;
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, length1);
+                msField.WriteTo(stream);
+
+            }
+            if (instance.DepositAmount != null)
+            {
+                // Key for field: 2, LengthDelimited
+                stream.WriteByte(18);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.DepositAmount);
+            }
+            if (instance.Expiration != null)
+            {
+                // Key for field: 3, Varint
+                stream.WriteByte(24);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt64(stream,(ulong)instance.Expiration.Value);
+            }
+            if (instance.QuotedRate != null)
+            {
+                // Key for field: 4, LengthDelimited
+                stream.WriteByte(34);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.QuotedRate);
+            }
+            if (instance.WithdrawalAddress != null)
+            {
+                // Key for field: 5, LengthDelimited
+                stream.WriteByte(42);
+                ﻿msField.SetLength(0);
+                global::KeepKeySharp.Contracts.ExchangeAddress.Serialize(msField, instance.WithdrawalAddress);
+                // Length delimited byte array
+                uint length5 = (uint)msField.Length;
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, length5);
+                msField.WriteTo(stream);
+
+            }
+            if (instance.WithdrawalAmount != null)
+            {
+                // Key for field: 6, LengthDelimited
+                stream.WriteByte(50);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.WithdrawalAmount);
+            }
+            if (instance.ReturnAddress != null)
+            {
+                // Key for field: 7, LengthDelimited
+                stream.WriteByte(58);
+                ﻿msField.SetLength(0);
+                global::KeepKeySharp.Contracts.ExchangeAddress.Serialize(msField, instance.ReturnAddress);
+                // Length delimited byte array
+                uint length7 = (uint)msField.Length;
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, length7);
+                msField.WriteTo(stream);
+
+            }
+            if (instance.ApiKey != null)
+            {
+                // Key for field: 8, LengthDelimited
+                stream.WriteByte(66);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.ApiKey);
+            }
+            if (instance.MinerFee != null)
+            {
+                // Key for field: 9, LengthDelimited
+                stream.WriteByte(74);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.MinerFee);
+            }
+            if (instance.OrderId != null)
+            {
+                // Key for field: 10, LengthDelimited
+                stream.WriteByte(82);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.OrderId);
+            }
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
+        }
+
+        /// <summary>Helper: Serialize into a MemoryStream and return its byte array</summary>
+        public static byte[] SerializeToBytes(ExchangeResponseV2 instance)
+        {
+            using (var ms = new MemoryStream())
+            {
+                Serialize(ms, instance);
+                return ms.ToArray();
+            }
+        }
+        /// <summary>Helper: Serialize with a varint length prefix</summary>
+        public static void SerializeLengthDelimited(Stream stream, ExchangeResponseV2 instance)
+        {
+            var data = SerializeToBytes(instance);
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
+            stream.Write(data, 0, data.Length);
+        }
+    }
+
+    [System.Serializable]
+    public partial class SignedExchangeResponse
+    {
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static SignedExchangeResponse Deserialize(Stream stream)
+        {
+            var instance = new SignedExchangeResponse();
+            Deserialize(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static SignedExchangeResponse DeserializeLengthDelimited(Stream stream)
+        {
+            var instance = new SignedExchangeResponse();
+            DeserializeLengthDelimited(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static SignedExchangeResponse DeserializeLength(Stream stream, int length)
+        {
+            var instance = new SignedExchangeResponse();
+            DeserializeLength(stream, length, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream and create a new instance to deserializing into</summary>
+        public static SignedExchangeResponse Deserialize(byte[] buffer)
+        {
+            var instance = new SignedExchangeResponse();
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream before deserializing</summary>
+        public static global::KeepKeySharp.Contracts.SignedExchangeResponse Deserialize(byte[] buffer, global::KeepKeySharp.Contracts.SignedExchangeResponse instance)
+        {
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Takes the remaining content of the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.SignedExchangeResponse Deserialize(Stream stream, global::KeepKeySharp.Contracts.SignedExchangeResponse instance)
+        {
+            while (true)
+            {
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    break;
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        if (instance.Response == null)
+                            instance.Response = global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream, instance.Response);
+                        continue;
+                    // Field 2 LengthDelimited
+                    case 18:
+                        instance.Signature = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 3 LengthDelimited
+                    case 26:
+                        if (instance.ResponseV2 == null)
+                            instance.ResponseV2 = global::KeepKeySharp.Contracts.ExchangeResponseV2.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeResponseV2.DeserializeLengthDelimited(stream, instance.ResponseV2);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the VarInt length prefix and the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.SignedExchangeResponse DeserializeLengthDelimited(Stream stream, global::KeepKeySharp.Contracts.SignedExchangeResponse instance)
+        {
+            long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+            limit += stream.Position;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        if (instance.Response == null)
+                            instance.Response = global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream, instance.Response);
+                        continue;
+                    // Field 2 LengthDelimited
+                    case 18:
+                        instance.Signature = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 3 LengthDelimited
+                    case 26:
+                        if (instance.ResponseV2 == null)
+                            instance.ResponseV2 = global::KeepKeySharp.Contracts.ExchangeResponseV2.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeResponseV2.DeserializeLengthDelimited(stream, instance.ResponseV2);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.SignedExchangeResponse DeserializeLength(Stream stream, int length, global::KeepKeySharp.Contracts.SignedExchangeResponse instance)
+        {
+            long limit = stream.Position + length;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        if (instance.Response == null)
+                            instance.Response = global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream, instance.Response);
+                        continue;
+                    // Field 2 LengthDelimited
+                    case 18:
+                        instance.Signature = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 3 LengthDelimited
+                    case 26:
+                        if (instance.ResponseV2 == null)
+                            instance.ResponseV2 = global::KeepKeySharp.Contracts.ExchangeResponseV2.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeResponseV2.DeserializeLengthDelimited(stream, instance.ResponseV2);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Serialize the instance into the stream</summary>
+        public static void Serialize(Stream stream, SignedExchangeResponse instance)
+        {
+            var msField = global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Pop();
+            if (instance.Response != null)
+            {
+                // Key for field: 1, LengthDelimited
+                stream.WriteByte(10);
+                ﻿msField.SetLength(0);
+                global::KeepKeySharp.Contracts.ExchangeResponse.Serialize(msField, instance.Response);
+                // Length delimited byte array
+                uint length1 = (uint)msField.Length;
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, length1);
+                msField.WriteTo(stream);
+
+            }
+            if (instance.Signature != null)
+            {
+                // Key for field: 2, LengthDelimited
+                stream.WriteByte(18);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.Signature);
+            }
+            if (instance.ResponseV2 != null)
+            {
+                // Key for field: 3, LengthDelimited
+                stream.WriteByte(26);
+                ﻿msField.SetLength(0);
+                global::KeepKeySharp.Contracts.ExchangeResponseV2.Serialize(msField, instance.ResponseV2);
+                // Length delimited byte array
+                uint length3 = (uint)msField.Length;
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, length3);
+                msField.WriteTo(stream);
+
+            }
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
+        }
+
+        /// <summary>Helper: Serialize into a MemoryStream and return its byte array</summary>
+        public static byte[] SerializeToBytes(SignedExchangeResponse instance)
+        {
+            using (var ms = new MemoryStream())
+            {
+                Serialize(ms, instance);
+                return ms.ToArray();
+            }
+        }
+        /// <summary>Helper: Serialize with a varint length prefix</summary>
+        public static void SerializeLengthDelimited(Stream stream, SignedExchangeResponse instance)
+        {
+            var data = SerializeToBytes(instance);
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
+            stream.Write(data, 0, data.Length);
+        }
+    }
+
+    [System.Serializable]
     public partial class ExchangeResponse
     {
         /// <summary>Helper: create a new instance to deserializing into</summary>
@@ -649,230 +1304,6 @@ namespace KeepKeySharp.Contracts
         }
         /// <summary>Helper: Serialize with a varint length prefix</summary>
         public static void SerializeLengthDelimited(Stream stream, ExchangeResponse instance)
-        {
-            var data = SerializeToBytes(instance);
-            global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
-            stream.Write(data, 0, data.Length);
-        }
-    }
-
-    [System.Serializable]
-    public partial class SignedExchangeResponse
-    {
-        /// <summary>Helper: create a new instance to deserializing into</summary>
-        public static SignedExchangeResponse Deserialize(Stream stream)
-        {
-            var instance = new SignedExchangeResponse();
-            Deserialize(stream, instance);
-            return instance;
-        }
-
-        /// <summary>Helper: create a new instance to deserializing into</summary>
-        public static SignedExchangeResponse DeserializeLengthDelimited(Stream stream)
-        {
-            var instance = new SignedExchangeResponse();
-            DeserializeLengthDelimited(stream, instance);
-            return instance;
-        }
-
-        /// <summary>Helper: create a new instance to deserializing into</summary>
-        public static SignedExchangeResponse DeserializeLength(Stream stream, int length)
-        {
-            var instance = new SignedExchangeResponse();
-            DeserializeLength(stream, length, instance);
-            return instance;
-        }
-
-        /// <summary>Helper: put the buffer into a MemoryStream and create a new instance to deserializing into</summary>
-        public static SignedExchangeResponse Deserialize(byte[] buffer)
-        {
-            var instance = new SignedExchangeResponse();
-            using (var ms = new MemoryStream(buffer))
-                Deserialize(ms, instance);
-            return instance;
-        }
-
-        /// <summary>Helper: put the buffer into a MemoryStream before deserializing</summary>
-        public static global::KeepKeySharp.Contracts.SignedExchangeResponse Deserialize(byte[] buffer, global::KeepKeySharp.Contracts.SignedExchangeResponse instance)
-        {
-            using (var ms = new MemoryStream(buffer))
-                Deserialize(ms, instance);
-            return instance;
-        }
-
-        /// <summary>Takes the remaining content of the stream and deserialze it into the instance.</summary>
-        public static global::KeepKeySharp.Contracts.SignedExchangeResponse Deserialize(Stream stream, global::KeepKeySharp.Contracts.SignedExchangeResponse instance)
-        {
-            while (true)
-            {
-                int keyByte = stream.ReadByte();
-                if (keyByte == -1)
-                    break;
-                // Optimized reading of known fields with field ID < 16
-                switch (keyByte)
-                {
-                    // Field 1 LengthDelimited
-                    case 10:
-                        if (instance.Response == null)
-                            instance.Response = global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream);
-                        else
-                            global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream, instance.Response);
-                        continue;
-                    // Field 2 LengthDelimited
-                    case 18:
-                        instance.Signature = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
-                        continue;
-                }
-
-                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
-
-                // Reading field ID > 16 and unknown field ID/wire type combinations
-                switch (key.Field)
-                {
-                    case 0:
-                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
-                    default:
-                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
-                        break;
-                }
-            }
-
-            return instance;
-        }
-
-        /// <summary>Read the VarInt length prefix and the given number of bytes from the stream and deserialze it into the instance.</summary>
-        public static global::KeepKeySharp.Contracts.SignedExchangeResponse DeserializeLengthDelimited(Stream stream, global::KeepKeySharp.Contracts.SignedExchangeResponse instance)
-        {
-            long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
-            limit += stream.Position;
-            while (true)
-            {
-                if (stream.Position >= limit)
-                {
-                    if (stream.Position == limit)
-                        break;
-                    else
-                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
-                }
-                int keyByte = stream.ReadByte();
-                if (keyByte == -1)
-                    throw new System.IO.EndOfStreamException();
-                // Optimized reading of known fields with field ID < 16
-                switch (keyByte)
-                {
-                    // Field 1 LengthDelimited
-                    case 10:
-                        if (instance.Response == null)
-                            instance.Response = global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream);
-                        else
-                            global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream, instance.Response);
-                        continue;
-                    // Field 2 LengthDelimited
-                    case 18:
-                        instance.Signature = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
-                        continue;
-                }
-
-                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
-
-                // Reading field ID > 16 and unknown field ID/wire type combinations
-                switch (key.Field)
-                {
-                    case 0:
-                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
-                    default:
-                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
-                        break;
-                }
-            }
-
-            return instance;
-        }
-
-        /// <summary>Read the given number of bytes from the stream and deserialze it into the instance.</summary>
-        public static global::KeepKeySharp.Contracts.SignedExchangeResponse DeserializeLength(Stream stream, int length, global::KeepKeySharp.Contracts.SignedExchangeResponse instance)
-        {
-            long limit = stream.Position + length;
-            while (true)
-            {
-                if (stream.Position >= limit)
-                {
-                    if (stream.Position == limit)
-                        break;
-                    else
-                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
-                }
-                int keyByte = stream.ReadByte();
-                if (keyByte == -1)
-                    throw new System.IO.EndOfStreamException();
-                // Optimized reading of known fields with field ID < 16
-                switch (keyByte)
-                {
-                    // Field 1 LengthDelimited
-                    case 10:
-                        if (instance.Response == null)
-                            instance.Response = global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream);
-                        else
-                            global::KeepKeySharp.Contracts.ExchangeResponse.DeserializeLengthDelimited(stream, instance.Response);
-                        continue;
-                    // Field 2 LengthDelimited
-                    case 18:
-                        instance.Signature = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
-                        continue;
-                }
-
-                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
-
-                // Reading field ID > 16 and unknown field ID/wire type combinations
-                switch (key.Field)
-                {
-                    case 0:
-                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
-                    default:
-                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
-                        break;
-                }
-            }
-
-            return instance;
-        }
-
-        /// <summary>Serialize the instance into the stream</summary>
-        public static void Serialize(Stream stream, SignedExchangeResponse instance)
-        {
-            var msField = global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Pop();
-            if (instance.Response != null)
-            {
-                // Key for field: 1, LengthDelimited
-                stream.WriteByte(10);
-                ﻿msField.SetLength(0);
-                global::KeepKeySharp.Contracts.ExchangeResponse.Serialize(msField, instance.Response);
-                // Length delimited byte array
-                uint length1 = (uint)msField.Length;
-                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, length1);
-                msField.WriteTo(stream);
-
-            }
-            if (instance.Signature != null)
-            {
-                // Key for field: 2, LengthDelimited
-                stream.WriteByte(18);
-                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.Signature);
-            }
-            global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
-        }
-
-        /// <summary>Helper: Serialize into a MemoryStream and return its byte array</summary>
-        public static byte[] SerializeToBytes(SignedExchangeResponse instance)
-        {
-            using (var ms = new MemoryStream())
-            {
-                Serialize(ms, instance);
-                return ms.ToArray();
-            }
-        }
-        /// <summary>Helper: Serialize with a varint length prefix</summary>
-        public static void SerializeLengthDelimited(Stream stream, SignedExchangeResponse instance)
         {
             var data = SerializeToBytes(instance);
             global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
@@ -5106,6 +5537,7 @@ namespace KeepKeySharp.Contracts
             if (instance.AddressN == null)
                 instance.AddressN = new List<uint>();
             instance.CoinName = "'Bitcoin'";
+            instance.ScriptType = global::KeepKeySharp.Contracts.InputScriptType.SPENDADDRESS;
             while (true)
             {
                 int keyByte = stream.ReadByte();
@@ -5134,6 +5566,10 @@ namespace KeepKeySharp.Contracts
                         else
                             global::KeepKeySharp.Contracts.MultisigRedeemScriptType.DeserializeLengthDelimited(stream, instance.Multisig);
                         continue;
+                    // Field 5 Varint
+                    case 40:
+                        instance.ScriptType = (global::KeepKeySharp.Contracts.InputScriptType)global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -5158,6 +5594,7 @@ namespace KeepKeySharp.Contracts
             if (instance.AddressN == null)
                 instance.AddressN = new List<uint>();
             instance.CoinName = "'Bitcoin'";
+            instance.ScriptType = global::KeepKeySharp.Contracts.InputScriptType.SPENDADDRESS;
             long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
             limit += stream.Position;
             while (true)
@@ -5195,6 +5632,10 @@ namespace KeepKeySharp.Contracts
                         else
                             global::KeepKeySharp.Contracts.MultisigRedeemScriptType.DeserializeLengthDelimited(stream, instance.Multisig);
                         continue;
+                    // Field 5 Varint
+                    case 40:
+                        instance.ScriptType = (global::KeepKeySharp.Contracts.InputScriptType)global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -5219,6 +5660,7 @@ namespace KeepKeySharp.Contracts
             if (instance.AddressN == null)
                 instance.AddressN = new List<uint>();
             instance.CoinName = "'Bitcoin'";
+            instance.ScriptType = global::KeepKeySharp.Contracts.InputScriptType.SPENDADDRESS;
             long limit = stream.Position + length;
             while (true)
             {
@@ -5254,6 +5696,10 @@ namespace KeepKeySharp.Contracts
                             instance.Multisig = global::KeepKeySharp.Contracts.MultisigRedeemScriptType.DeserializeLengthDelimited(stream);
                         else
                             global::KeepKeySharp.Contracts.MultisigRedeemScriptType.DeserializeLengthDelimited(stream, instance.Multisig);
+                        continue;
+                    // Field 5 Varint
+                    case 40:
+                        instance.ScriptType = (global::KeepKeySharp.Contracts.InputScriptType)global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
                         continue;
                 }
 
@@ -5310,6 +5756,12 @@ namespace KeepKeySharp.Contracts
                 msField.WriteTo(stream);
 
             }
+            if (instance.ScriptType != null)
+            {
+                // Key for field: 5, Varint
+                stream.WriteByte(40);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt64(stream,(ulong)instance.ScriptType.Value);
+            }
             global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
         }
 
@@ -5324,6 +5776,227 @@ namespace KeepKeySharp.Contracts
         }
         /// <summary>Helper: Serialize with a varint length prefix</summary>
         public static void SerializeLengthDelimited(Stream stream, GetAddress instance)
+        {
+            var data = SerializeToBytes(instance);
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
+            stream.Write(data, 0, data.Length);
+        }
+    }
+
+    [System.Serializable]
+    public partial class EthereumGetAddress
+    {
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumGetAddress Deserialize(Stream stream)
+        {
+            var instance = new EthereumGetAddress();
+            Deserialize(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumGetAddress DeserializeLengthDelimited(Stream stream)
+        {
+            var instance = new EthereumGetAddress();
+            DeserializeLengthDelimited(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumGetAddress DeserializeLength(Stream stream, int length)
+        {
+            var instance = new EthereumGetAddress();
+            DeserializeLength(stream, length, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream and create a new instance to deserializing into</summary>
+        public static EthereumGetAddress Deserialize(byte[] buffer)
+        {
+            var instance = new EthereumGetAddress();
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream before deserializing</summary>
+        public static global::KeepKeySharp.Contracts.EthereumGetAddress Deserialize(byte[] buffer, global::KeepKeySharp.Contracts.EthereumGetAddress instance)
+        {
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Takes the remaining content of the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumGetAddress Deserialize(Stream stream, global::KeepKeySharp.Contracts.EthereumGetAddress instance)
+        {
+            if (instance.AddressN == null)
+                instance.AddressN = new List<uint>();
+            while (true)
+            {
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    break;
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 Varint
+                    case 8:
+                        // repeated
+                        instance.AddressN.Add(global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream));
+                        continue;
+                    // Field 2 Varint
+                    case 16:
+                        instance.ShowDisplay = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBool(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the VarInt length prefix and the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumGetAddress DeserializeLengthDelimited(Stream stream, global::KeepKeySharp.Contracts.EthereumGetAddress instance)
+        {
+            if (instance.AddressN == null)
+                instance.AddressN = new List<uint>();
+            long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+            limit += stream.Position;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 Varint
+                    case 8:
+                        // repeated
+                        instance.AddressN.Add(global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream));
+                        continue;
+                    // Field 2 Varint
+                    case 16:
+                        instance.ShowDisplay = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBool(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumGetAddress DeserializeLength(Stream stream, int length, global::KeepKeySharp.Contracts.EthereumGetAddress instance)
+        {
+            if (instance.AddressN == null)
+                instance.AddressN = new List<uint>();
+            long limit = stream.Position + length;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 Varint
+                    case 8:
+                        // repeated
+                        instance.AddressN.Add(global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream));
+                        continue;
+                    // Field 2 Varint
+                    case 16:
+                        instance.ShowDisplay = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBool(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Serialize the instance into the stream</summary>
+        public static void Serialize(Stream stream, EthereumGetAddress instance)
+        {
+            var msField = global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Pop();
+            if (instance.AddressN != null)
+            {
+                foreach (var i1 in instance.AddressN)
+                {
+                    // Key for field: 1, Varint
+                    stream.WriteByte(8);
+                    global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, i1);
+                }
+            }
+            if (instance.ShowDisplay != null)
+            {
+                // Key for field: 2, Varint
+                stream.WriteByte(16);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBool(stream, instance.ShowDisplay.Value);
+            }
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
+        }
+
+        /// <summary>Helper: Serialize into a MemoryStream and return its byte array</summary>
+        public static byte[] SerializeToBytes(EthereumGetAddress instance)
+        {
+            using (var ms = new MemoryStream())
+            {
+                Serialize(ms, instance);
+                return ms.ToArray();
+            }
+        }
+        /// <summary>Helper: Serialize with a varint length prefix</summary>
+        public static void SerializeLengthDelimited(Stream stream, EthereumGetAddress instance)
         {
             var data = SerializeToBytes(instance);
             global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
@@ -5514,6 +6187,196 @@ namespace KeepKeySharp.Contracts
         }
         /// <summary>Helper: Serialize with a varint length prefix</summary>
         public static void SerializeLengthDelimited(Stream stream, Address instance)
+        {
+            var data = SerializeToBytes(instance);
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
+            stream.Write(data, 0, data.Length);
+        }
+    }
+
+    [System.Serializable]
+    public partial class EthereumAddress
+    {
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumAddress Deserialize(Stream stream)
+        {
+            var instance = new EthereumAddress();
+            Deserialize(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumAddress DeserializeLengthDelimited(Stream stream)
+        {
+            var instance = new EthereumAddress();
+            DeserializeLengthDelimited(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumAddress DeserializeLength(Stream stream, int length)
+        {
+            var instance = new EthereumAddress();
+            DeserializeLength(stream, length, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream and create a new instance to deserializing into</summary>
+        public static EthereumAddress Deserialize(byte[] buffer)
+        {
+            var instance = new EthereumAddress();
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream before deserializing</summary>
+        public static global::KeepKeySharp.Contracts.EthereumAddress Deserialize(byte[] buffer, global::KeepKeySharp.Contracts.EthereumAddress instance)
+        {
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Takes the remaining content of the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumAddress Deserialize(Stream stream, global::KeepKeySharp.Contracts.EthereumAddress instance)
+        {
+            while (true)
+            {
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    break;
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        instance.Address = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the VarInt length prefix and the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumAddress DeserializeLengthDelimited(Stream stream, global::KeepKeySharp.Contracts.EthereumAddress instance)
+        {
+            long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+            limit += stream.Position;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        instance.Address = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumAddress DeserializeLength(Stream stream, int length, global::KeepKeySharp.Contracts.EthereumAddress instance)
+        {
+            long limit = stream.Position + length;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        instance.Address = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Serialize the instance into the stream</summary>
+        public static void Serialize(Stream stream, EthereumAddress instance)
+        {
+            var msField = global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Pop();
+            if (instance.Address == null)
+                throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Address is required by the proto specification.");
+            // Key for field: 1, LengthDelimited
+            stream.WriteByte(10);
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.Address);
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
+        }
+
+        /// <summary>Helper: Serialize into a MemoryStream and return its byte array</summary>
+        public static byte[] SerializeToBytes(EthereumAddress instance)
+        {
+            using (var ms = new MemoryStream())
+            {
+                Serialize(ms, instance);
+                return ms.ToArray();
+            }
+        }
+        /// <summary>Helper: Serialize with a varint length prefix</summary>
+        public static void SerializeLengthDelimited(Stream stream, EthereumAddress instance)
         {
             var data = SerializeToBytes(instance);
             global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
@@ -10346,6 +11209,8 @@ namespace KeepKeySharp.Contracts
         public static global::KeepKeySharp.Contracts.SignTx Deserialize(Stream stream, global::KeepKeySharp.Contracts.SignTx instance)
         {
             instance.CoinName = "'Bitcoin'";
+            instance.Version = 1;
+            instance.LockTime = 0;
             while (true)
             {
                 int keyByte = stream.ReadByte();
@@ -10365,6 +11230,14 @@ namespace KeepKeySharp.Contracts
                     // Field 3 LengthDelimited
                     case 26:
                         instance.CoinName = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadString(stream);
+                        continue;
+                    // Field 4 Varint
+                    case 32:
+                        instance.Version = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 5 Varint
+                    case 40:
+                        instance.LockTime = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
                         continue;
                 }
 
@@ -10388,6 +11261,8 @@ namespace KeepKeySharp.Contracts
         public static global::KeepKeySharp.Contracts.SignTx DeserializeLengthDelimited(Stream stream, global::KeepKeySharp.Contracts.SignTx instance)
         {
             instance.CoinName = "'Bitcoin'";
+            instance.Version = 1;
+            instance.LockTime = 0;
             long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
             limit += stream.Position;
             while (true)
@@ -10417,6 +11292,14 @@ namespace KeepKeySharp.Contracts
                     case 26:
                         instance.CoinName = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadString(stream);
                         continue;
+                    // Field 4 Varint
+                    case 32:
+                        instance.Version = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 5 Varint
+                    case 40:
+                        instance.LockTime = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -10439,6 +11322,8 @@ namespace KeepKeySharp.Contracts
         public static global::KeepKeySharp.Contracts.SignTx DeserializeLength(Stream stream, int length, global::KeepKeySharp.Contracts.SignTx instance)
         {
             instance.CoinName = "'Bitcoin'";
+            instance.Version = 1;
+            instance.LockTime = 0;
             long limit = stream.Position + length;
             while (true)
             {
@@ -10466,6 +11351,14 @@ namespace KeepKeySharp.Contracts
                     // Field 3 LengthDelimited
                     case 26:
                         instance.CoinName = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadString(stream);
+                        continue;
+                    // Field 4 Varint
+                    case 32:
+                        instance.Version = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 5 Varint
+                    case 40:
+                        instance.LockTime = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
                         continue;
                 }
 
@@ -10500,6 +11393,18 @@ namespace KeepKeySharp.Contracts
                 // Key for field: 3, LengthDelimited
                 stream.WriteByte(26);
                 global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, Encoding.UTF8.GetBytes(instance.CoinName));
+            }
+            if (instance.Version != null)
+            {
+                // Key for field: 4, Varint
+                stream.WriteByte(32);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.Version.Value);
+            }
+            if (instance.LockTime != null)
+            {
+                // Key for field: 5, Varint
+                stream.WriteByte(40);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.LockTime.Value);
             }
             global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
         }
@@ -10576,6 +11481,8 @@ namespace KeepKeySharp.Contracts
             if (instance.Transactions == null)
                 instance.Transactions = new List<global::KeepKeySharp.Contracts.TransactionType>();
             instance.CoinName = "'Bitcoin'";
+            instance.Version = 1;
+            instance.LockTime = 0;
             while (true)
             {
                 int keyByte = stream.ReadByte();
@@ -10602,6 +11509,14 @@ namespace KeepKeySharp.Contracts
                     // Field 4 LengthDelimited
                     case 34:
                         instance.CoinName = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadString(stream);
+                        continue;
+                    // Field 5 Varint
+                    case 40:
+                        instance.Version = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 6 Varint
+                    case 48:
+                        instance.LockTime = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
                         continue;
                 }
 
@@ -10631,6 +11546,8 @@ namespace KeepKeySharp.Contracts
             if (instance.Transactions == null)
                 instance.Transactions = new List<global::KeepKeySharp.Contracts.TransactionType>();
             instance.CoinName = "'Bitcoin'";
+            instance.Version = 1;
+            instance.LockTime = 0;
             long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
             limit += stream.Position;
             while (true)
@@ -10667,6 +11584,14 @@ namespace KeepKeySharp.Contracts
                     case 34:
                         instance.CoinName = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadString(stream);
                         continue;
+                    // Field 5 Varint
+                    case 40:
+                        instance.Version = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 6 Varint
+                    case 48:
+                        instance.LockTime = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -10695,6 +11620,8 @@ namespace KeepKeySharp.Contracts
             if (instance.Transactions == null)
                 instance.Transactions = new List<global::KeepKeySharp.Contracts.TransactionType>();
             instance.CoinName = "'Bitcoin'";
+            instance.Version = 1;
+            instance.LockTime = 0;
             long limit = stream.Position + length;
             while (true)
             {
@@ -10729,6 +11656,14 @@ namespace KeepKeySharp.Contracts
                     // Field 4 LengthDelimited
                     case 34:
                         instance.CoinName = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadString(stream);
+                        continue;
+                    // Field 5 Varint
+                    case 40:
+                        instance.Version = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 6 Varint
+                    case 48:
+                        instance.LockTime = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
                         continue;
                 }
 
@@ -10802,6 +11737,18 @@ namespace KeepKeySharp.Contracts
                 // Key for field: 4, LengthDelimited
                 stream.WriteByte(34);
                 global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, Encoding.UTF8.GetBytes(instance.CoinName));
+            }
+            if (instance.Version != null)
+            {
+                // Key for field: 5, Varint
+                stream.WriteByte(40);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.Version.Value);
+            }
+            if (instance.LockTime != null)
+            {
+                // Key for field: 6, Varint
+                stream.WriteByte(48);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.LockTime.Value);
             }
             global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
         }
@@ -11486,6 +12433,906 @@ namespace KeepKeySharp.Contracts
         }
         /// <summary>Helper: Serialize with a varint length prefix</summary>
         public static void SerializeLengthDelimited(Stream stream, RawTxAck instance)
+        {
+            var data = SerializeToBytes(instance);
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
+            stream.Write(data, 0, data.Length);
+        }
+    }
+
+    [System.Serializable]
+    public partial class EthereumSignTx
+    {
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumSignTx Deserialize(Stream stream)
+        {
+            var instance = new EthereumSignTx();
+            Deserialize(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumSignTx DeserializeLengthDelimited(Stream stream)
+        {
+            var instance = new EthereumSignTx();
+            DeserializeLengthDelimited(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumSignTx DeserializeLength(Stream stream, int length)
+        {
+            var instance = new EthereumSignTx();
+            DeserializeLength(stream, length, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream and create a new instance to deserializing into</summary>
+        public static EthereumSignTx Deserialize(byte[] buffer)
+        {
+            var instance = new EthereumSignTx();
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream before deserializing</summary>
+        public static global::KeepKeySharp.Contracts.EthereumSignTx Deserialize(byte[] buffer, global::KeepKeySharp.Contracts.EthereumSignTx instance)
+        {
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Takes the remaining content of the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumSignTx Deserialize(Stream stream, global::KeepKeySharp.Contracts.EthereumSignTx instance)
+        {
+            if (instance.AddressN == null)
+                instance.AddressN = new List<uint>();
+            if (instance.ToAddressN == null)
+                instance.ToAddressN = new List<uint>();
+            while (true)
+            {
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    break;
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 Varint
+                    case 8:
+                        // repeated
+                        instance.AddressN.Add(global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream));
+                        continue;
+                    // Field 2 LengthDelimited
+                    case 18:
+                        instance.Nonce = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 3 LengthDelimited
+                    case 26:
+                        instance.GasPrice = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 4 LengthDelimited
+                    case 34:
+                        instance.GasLimit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 5 LengthDelimited
+                    case 42:
+                        instance.To = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 6 LengthDelimited
+                    case 50:
+                        instance.Value = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 7 LengthDelimited
+                    case 58:
+                        instance.DataInitialChunk = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 8 Varint
+                    case 64:
+                        instance.DataLength = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 9 Varint
+                    case 72:
+                        // repeated
+                        instance.ToAddressN.Add(global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream));
+                        continue;
+                    // Field 10 Varint
+                    case 80:
+                        instance.AddressType = (global::KeepKeySharp.Contracts.OutputAddressType)global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
+                    // Field 11 LengthDelimited
+                    case 90:
+                        if (instance.ExchangeType == null)
+                            instance.ExchangeType = global::KeepKeySharp.Contracts.ExchangeType.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeType.DeserializeLengthDelimited(stream, instance.ExchangeType);
+                        continue;
+                    // Field 12 Varint
+                    case 96:
+                        instance.ChainId = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the VarInt length prefix and the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumSignTx DeserializeLengthDelimited(Stream stream, global::KeepKeySharp.Contracts.EthereumSignTx instance)
+        {
+            if (instance.AddressN == null)
+                instance.AddressN = new List<uint>();
+            if (instance.ToAddressN == null)
+                instance.ToAddressN = new List<uint>();
+            long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+            limit += stream.Position;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 Varint
+                    case 8:
+                        // repeated
+                        instance.AddressN.Add(global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream));
+                        continue;
+                    // Field 2 LengthDelimited
+                    case 18:
+                        instance.Nonce = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 3 LengthDelimited
+                    case 26:
+                        instance.GasPrice = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 4 LengthDelimited
+                    case 34:
+                        instance.GasLimit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 5 LengthDelimited
+                    case 42:
+                        instance.To = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 6 LengthDelimited
+                    case 50:
+                        instance.Value = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 7 LengthDelimited
+                    case 58:
+                        instance.DataInitialChunk = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 8 Varint
+                    case 64:
+                        instance.DataLength = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 9 Varint
+                    case 72:
+                        // repeated
+                        instance.ToAddressN.Add(global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream));
+                        continue;
+                    // Field 10 Varint
+                    case 80:
+                        instance.AddressType = (global::KeepKeySharp.Contracts.OutputAddressType)global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
+                    // Field 11 LengthDelimited
+                    case 90:
+                        if (instance.ExchangeType == null)
+                            instance.ExchangeType = global::KeepKeySharp.Contracts.ExchangeType.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeType.DeserializeLengthDelimited(stream, instance.ExchangeType);
+                        continue;
+                    // Field 12 Varint
+                    case 96:
+                        instance.ChainId = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumSignTx DeserializeLength(Stream stream, int length, global::KeepKeySharp.Contracts.EthereumSignTx instance)
+        {
+            if (instance.AddressN == null)
+                instance.AddressN = new List<uint>();
+            if (instance.ToAddressN == null)
+                instance.ToAddressN = new List<uint>();
+            long limit = stream.Position + length;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 Varint
+                    case 8:
+                        // repeated
+                        instance.AddressN.Add(global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream));
+                        continue;
+                    // Field 2 LengthDelimited
+                    case 18:
+                        instance.Nonce = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 3 LengthDelimited
+                    case 26:
+                        instance.GasPrice = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 4 LengthDelimited
+                    case 34:
+                        instance.GasLimit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 5 LengthDelimited
+                    case 42:
+                        instance.To = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 6 LengthDelimited
+                    case 50:
+                        instance.Value = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 7 LengthDelimited
+                    case 58:
+                        instance.DataInitialChunk = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 8 Varint
+                    case 64:
+                        instance.DataLength = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 9 Varint
+                    case 72:
+                        // repeated
+                        instance.ToAddressN.Add(global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream));
+                        continue;
+                    // Field 10 Varint
+                    case 80:
+                        instance.AddressType = (global::KeepKeySharp.Contracts.OutputAddressType)global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
+                    // Field 11 LengthDelimited
+                    case 90:
+                        if (instance.ExchangeType == null)
+                            instance.ExchangeType = global::KeepKeySharp.Contracts.ExchangeType.DeserializeLengthDelimited(stream);
+                        else
+                            global::KeepKeySharp.Contracts.ExchangeType.DeserializeLengthDelimited(stream, instance.ExchangeType);
+                        continue;
+                    // Field 12 Varint
+                    case 96:
+                        instance.ChainId = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Serialize the instance into the stream</summary>
+        public static void Serialize(Stream stream, EthereumSignTx instance)
+        {
+            var msField = global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Pop();
+            if (instance.AddressN != null)
+            {
+                foreach (var i1 in instance.AddressN)
+                {
+                    // Key for field: 1, Varint
+                    stream.WriteByte(8);
+                    global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, i1);
+                }
+            }
+            if (instance.Nonce != null)
+            {
+                // Key for field: 2, LengthDelimited
+                stream.WriteByte(18);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.Nonce);
+            }
+            if (instance.GasPrice != null)
+            {
+                // Key for field: 3, LengthDelimited
+                stream.WriteByte(26);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.GasPrice);
+            }
+            if (instance.GasLimit != null)
+            {
+                // Key for field: 4, LengthDelimited
+                stream.WriteByte(34);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.GasLimit);
+            }
+            if (instance.To != null)
+            {
+                // Key for field: 5, LengthDelimited
+                stream.WriteByte(42);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.To);
+            }
+            if (instance.Value != null)
+            {
+                // Key for field: 6, LengthDelimited
+                stream.WriteByte(50);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.Value);
+            }
+            if (instance.DataInitialChunk != null)
+            {
+                // Key for field: 7, LengthDelimited
+                stream.WriteByte(58);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.DataInitialChunk);
+            }
+            if (instance.DataLength != null)
+            {
+                // Key for field: 8, Varint
+                stream.WriteByte(64);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.DataLength.Value);
+            }
+            if (instance.ToAddressN != null)
+            {
+                foreach (var i9 in instance.ToAddressN)
+                {
+                    // Key for field: 9, Varint
+                    stream.WriteByte(72);
+                    global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, i9);
+                }
+            }
+            if (instance.AddressType != null)
+            {
+                // Key for field: 10, Varint
+                stream.WriteByte(80);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt64(stream,(ulong)instance.AddressType.Value);
+            }
+            if (instance.ExchangeType != null)
+            {
+                // Key for field: 11, LengthDelimited
+                stream.WriteByte(90);
+                ﻿msField.SetLength(0);
+                global::KeepKeySharp.Contracts.ExchangeType.Serialize(msField, instance.ExchangeType);
+                // Length delimited byte array
+                uint length11 = (uint)msField.Length;
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, length11);
+                msField.WriteTo(stream);
+
+            }
+            if (instance.ChainId != null)
+            {
+                // Key for field: 12, Varint
+                stream.WriteByte(96);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.ChainId.Value);
+            }
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
+        }
+
+        /// <summary>Helper: Serialize into a MemoryStream and return its byte array</summary>
+        public static byte[] SerializeToBytes(EthereumSignTx instance)
+        {
+            using (var ms = new MemoryStream())
+            {
+                Serialize(ms, instance);
+                return ms.ToArray();
+            }
+        }
+        /// <summary>Helper: Serialize with a varint length prefix</summary>
+        public static void SerializeLengthDelimited(Stream stream, EthereumSignTx instance)
+        {
+            var data = SerializeToBytes(instance);
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
+            stream.Write(data, 0, data.Length);
+        }
+    }
+
+    [System.Serializable]
+    public partial class EthereumTxRequest
+    {
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumTxRequest Deserialize(Stream stream)
+        {
+            var instance = new EthereumTxRequest();
+            Deserialize(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumTxRequest DeserializeLengthDelimited(Stream stream)
+        {
+            var instance = new EthereumTxRequest();
+            DeserializeLengthDelimited(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumTxRequest DeserializeLength(Stream stream, int length)
+        {
+            var instance = new EthereumTxRequest();
+            DeserializeLength(stream, length, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream and create a new instance to deserializing into</summary>
+        public static EthereumTxRequest Deserialize(byte[] buffer)
+        {
+            var instance = new EthereumTxRequest();
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream before deserializing</summary>
+        public static global::KeepKeySharp.Contracts.EthereumTxRequest Deserialize(byte[] buffer, global::KeepKeySharp.Contracts.EthereumTxRequest instance)
+        {
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Takes the remaining content of the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumTxRequest Deserialize(Stream stream, global::KeepKeySharp.Contracts.EthereumTxRequest instance)
+        {
+            while (true)
+            {
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    break;
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 Varint
+                    case 8:
+                        instance.DataLength = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 2 Varint
+                    case 16:
+                        instance.SignatureV = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 3 LengthDelimited
+                    case 26:
+                        instance.SignatureR = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 4 LengthDelimited
+                    case 34:
+                        instance.SignatureS = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 5 LengthDelimited
+                    case 42:
+                        instance.Hash = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 6 LengthDelimited
+                    case 50:
+                        instance.SignatureDer = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the VarInt length prefix and the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumTxRequest DeserializeLengthDelimited(Stream stream, global::KeepKeySharp.Contracts.EthereumTxRequest instance)
+        {
+            long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+            limit += stream.Position;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 Varint
+                    case 8:
+                        instance.DataLength = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 2 Varint
+                    case 16:
+                        instance.SignatureV = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 3 LengthDelimited
+                    case 26:
+                        instance.SignatureR = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 4 LengthDelimited
+                    case 34:
+                        instance.SignatureS = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 5 LengthDelimited
+                    case 42:
+                        instance.Hash = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 6 LengthDelimited
+                    case 50:
+                        instance.SignatureDer = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumTxRequest DeserializeLength(Stream stream, int length, global::KeepKeySharp.Contracts.EthereumTxRequest instance)
+        {
+            long limit = stream.Position + length;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 Varint
+                    case 8:
+                        instance.DataLength = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 2 Varint
+                    case 16:
+                        instance.SignatureV = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 3 LengthDelimited
+                    case 26:
+                        instance.SignatureR = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 4 LengthDelimited
+                    case 34:
+                        instance.SignatureS = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 5 LengthDelimited
+                    case 42:
+                        instance.Hash = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 6 LengthDelimited
+                    case 50:
+                        instance.SignatureDer = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Serialize the instance into the stream</summary>
+        public static void Serialize(Stream stream, EthereumTxRequest instance)
+        {
+            var msField = global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Pop();
+            if (instance.DataLength != null)
+            {
+                // Key for field: 1, Varint
+                stream.WriteByte(8);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.DataLength.Value);
+            }
+            if (instance.SignatureV != null)
+            {
+                // Key for field: 2, Varint
+                stream.WriteByte(16);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.SignatureV.Value);
+            }
+            if (instance.SignatureR != null)
+            {
+                // Key for field: 3, LengthDelimited
+                stream.WriteByte(26);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.SignatureR);
+            }
+            if (instance.SignatureS != null)
+            {
+                // Key for field: 4, LengthDelimited
+                stream.WriteByte(34);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.SignatureS);
+            }
+            if (instance.Hash != null)
+            {
+                // Key for field: 5, LengthDelimited
+                stream.WriteByte(42);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.Hash);
+            }
+            if (instance.SignatureDer != null)
+            {
+                // Key for field: 6, LengthDelimited
+                stream.WriteByte(50);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.SignatureDer);
+            }
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
+        }
+
+        /// <summary>Helper: Serialize into a MemoryStream and return its byte array</summary>
+        public static byte[] SerializeToBytes(EthereumTxRequest instance)
+        {
+            using (var ms = new MemoryStream())
+            {
+                Serialize(ms, instance);
+                return ms.ToArray();
+            }
+        }
+        /// <summary>Helper: Serialize with a varint length prefix</summary>
+        public static void SerializeLengthDelimited(Stream stream, EthereumTxRequest instance)
+        {
+            var data = SerializeToBytes(instance);
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
+            stream.Write(data, 0, data.Length);
+        }
+    }
+
+    [System.Serializable]
+    public partial class EthereumTxAck
+    {
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumTxAck Deserialize(Stream stream)
+        {
+            var instance = new EthereumTxAck();
+            Deserialize(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumTxAck DeserializeLengthDelimited(Stream stream)
+        {
+            var instance = new EthereumTxAck();
+            DeserializeLengthDelimited(stream, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: create a new instance to deserializing into</summary>
+        public static EthereumTxAck DeserializeLength(Stream stream, int length)
+        {
+            var instance = new EthereumTxAck();
+            DeserializeLength(stream, length, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream and create a new instance to deserializing into</summary>
+        public static EthereumTxAck Deserialize(byte[] buffer)
+        {
+            var instance = new EthereumTxAck();
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Helper: put the buffer into a MemoryStream before deserializing</summary>
+        public static global::KeepKeySharp.Contracts.EthereumTxAck Deserialize(byte[] buffer, global::KeepKeySharp.Contracts.EthereumTxAck instance)
+        {
+            using (var ms = new MemoryStream(buffer))
+                Deserialize(ms, instance);
+            return instance;
+        }
+
+        /// <summary>Takes the remaining content of the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumTxAck Deserialize(Stream stream, global::KeepKeySharp.Contracts.EthereumTxAck instance)
+        {
+            while (true)
+            {
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    break;
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        instance.DataChunk = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the VarInt length prefix and the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumTxAck DeserializeLengthDelimited(Stream stream, global::KeepKeySharp.Contracts.EthereumTxAck instance)
+        {
+            long limit = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+            limit += stream.Position;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        instance.DataChunk = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Read the given number of bytes from the stream and deserialze it into the instance.</summary>
+        public static global::KeepKeySharp.Contracts.EthereumTxAck DeserializeLength(Stream stream, int length, global::KeepKeySharp.Contracts.EthereumTxAck instance)
+        {
+            long limit = stream.Position + length;
+            while (true)
+            {
+                if (stream.Position >= limit)
+                {
+                    if (stream.Position == limit)
+                        break;
+                    else
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Read past max limit");
+                }
+                int keyByte = stream.ReadByte();
+                if (keyByte == -1)
+                    throw new System.IO.EndOfStreamException();
+                // Optimized reading of known fields with field ID < 16
+                switch (keyByte)
+                {
+                    // Field 1 LengthDelimited
+                    case 10:
+                        instance.DataChunk = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                }
+
+                var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
+
+                // Reading field ID > 16 and unknown field ID/wire type combinations
+                switch (key.Field)
+                {
+                    case 0:
+                        throw new global::SilentOrbit.ProtocolBuffers.ProtocolBufferException("Invalid field id: 0, something went wrong in the stream");
+                    default:
+                        global::SilentOrbit.ProtocolBuffers.ProtocolParser.SkipKey(stream, key);
+                        break;
+                }
+            }
+
+            return instance;
+        }
+
+        /// <summary>Serialize the instance into the stream</summary>
+        public static void Serialize(Stream stream, EthereumTxAck instance)
+        {
+            var msField = global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Pop();
+            if (instance.DataChunk != null)
+            {
+                // Key for field: 1, LengthDelimited
+                stream.WriteByte(10);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.DataChunk);
+            }
+            global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
+        }
+
+        /// <summary>Helper: Serialize into a MemoryStream and return its byte array</summary>
+        public static byte[] SerializeToBytes(EthereumTxAck instance)
+        {
+            using (var ms = new MemoryStream())
+            {
+                Serialize(ms, instance);
+                return ms.ToArray();
+            }
+        }
+        /// <summary>Helper: Serialize with a varint length prefix</summary>
+        public static void SerializeLengthDelimited(Stream stream, EthereumTxAck instance)
         {
             var data = SerializeToBytes(instance);
             global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, (uint)data.Length);
@@ -15467,6 +17314,10 @@ namespace KeepKeySharp.Contracts
                         else
                             global::KeepKeySharp.Contracts.MultisigRedeemScriptType.DeserializeLengthDelimited(stream, instance.Multisig);
                         continue;
+                    // Field 8 Varint
+                    case 64:
+                        instance.Amount = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -15541,6 +17392,10 @@ namespace KeepKeySharp.Contracts
                         else
                             global::KeepKeySharp.Contracts.MultisigRedeemScriptType.DeserializeLengthDelimited(stream, instance.Multisig);
                         continue;
+                    // Field 8 Varint
+                    case 64:
+                        instance.Amount = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -15614,6 +17469,10 @@ namespace KeepKeySharp.Contracts
                         else
                             global::KeepKeySharp.Contracts.MultisigRedeemScriptType.DeserializeLengthDelimited(stream, instance.Multisig);
                         continue;
+                    // Field 8 Varint
+                    case 64:
+                        instance.Amount = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt64(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -15682,6 +17541,12 @@ namespace KeepKeySharp.Contracts
                 global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, length7);
                 msField.WriteTo(stream);
 
+            }
+            if (instance.Amount != null)
+            {
+                // Key for field: 8, Varint
+                stream.WriteByte(64);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt64(stream, instance.Amount.Value);
             }
             global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
         }
@@ -16354,6 +18219,14 @@ namespace KeepKeySharp.Contracts
                     case 56:
                         instance.OutputsCnt = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
                         continue;
+                    // Field 8 LengthDelimited
+                    case 66:
+                        instance.ExtraData = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 9 Varint
+                    case 72:
+                        instance.ExtraDataLen = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -16429,6 +18302,14 @@ namespace KeepKeySharp.Contracts
                     case 56:
                         instance.OutputsCnt = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
                         continue;
+                    // Field 8 LengthDelimited
+                    case 66:
+                        instance.ExtraData = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 9 Varint
+                    case 72:
+                        instance.ExtraDataLen = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -16502,6 +18383,14 @@ namespace KeepKeySharp.Contracts
                     // Field 7 Varint
                     case 56:
                         instance.OutputsCnt = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 8 LengthDelimited
+                    case 66:
+                        instance.ExtraData = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
+                        continue;
+                    // Field 9 Varint
+                    case 72:
+                        instance.ExtraDataLen = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
                         continue;
                 }
 
@@ -16593,6 +18482,18 @@ namespace KeepKeySharp.Contracts
                 // Key for field: 7, Varint
                 stream.WriteByte(56);
                 global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.OutputsCnt.Value);
+            }
+            if (instance.ExtraData != null)
+            {
+                // Key for field: 8, LengthDelimited
+                stream.WriteByte(66);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.ExtraData);
+            }
+            if (instance.ExtraDataLen != null)
+            {
+                // Key for field: 9, Varint
+                stream.WriteByte(72);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.ExtraDataLen.Value);
             }
             global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
         }
@@ -16868,6 +18769,14 @@ namespace KeepKeySharp.Contracts
                     case 18:
                         instance.TxHash = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
                         continue;
+                    // Field 3 Varint
+                    case 24:
+                        instance.ExtraDataLen = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 4 Varint
+                    case 32:
+                        instance.ExtraDataOffset = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -16914,6 +18823,14 @@ namespace KeepKeySharp.Contracts
                     case 18:
                         instance.TxHash = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
                         continue;
+                    // Field 3 Varint
+                    case 24:
+                        instance.ExtraDataLen = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 4 Varint
+                    case 32:
+                        instance.ExtraDataOffset = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -16959,6 +18876,14 @@ namespace KeepKeySharp.Contracts
                     case 18:
                         instance.TxHash = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadBytes(stream);
                         continue;
+                    // Field 3 Varint
+                    case 24:
+                        instance.ExtraDataLen = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
+                    // Field 4 Varint
+                    case 32:
+                        instance.ExtraDataOffset = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadUInt32(stream);
+                        continue;
                 }
 
                 var key = global::SilentOrbit.ProtocolBuffers.ProtocolParser.ReadKey((byte)keyByte, stream);
@@ -16992,6 +18917,18 @@ namespace KeepKeySharp.Contracts
                 // Key for field: 2, LengthDelimited
                 stream.WriteByte(18);
                 global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteBytes(stream, instance.TxHash);
+            }
+            if (instance.ExtraDataLen != null)
+            {
+                // Key for field: 3, Varint
+                stream.WriteByte(24);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.ExtraDataLen.Value);
+            }
+            if (instance.ExtraDataOffset != null)
+            {
+                // Key for field: 4, Varint
+                stream.WriteByte(32);
+                global::SilentOrbit.ProtocolBuffers.ProtocolParser.WriteUInt32(stream, instance.ExtraDataOffset.Value);
             }
             global::SilentOrbit.ProtocolBuffers.ProtocolParser.Stack.Push(msField);
         }
